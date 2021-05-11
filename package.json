@@ -1,0 +1,39 @@
+{
+  "name": "express_crud_app",
+  "version": "1.0.0",
+  "description": "This app is for the implementation of crud operations using express and a database.",
+  "main": "index.js", 
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alaomichael/express_crud_app.git"
+  },
+  "keywords": [
+    "express app",
+    "crud app",
+    "mongodb",
+    "mongoose"
+  ],
+  "author": "Michael Alao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alaomichael/express_crud_app/issues"
+  },
+  "homepage": "https://github.com/alaomichael/express_crud_app#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^9.0.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.11.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.6.6",
+    "mongoose": "^5.12.7"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
+
