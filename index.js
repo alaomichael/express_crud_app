@@ -3,7 +3,7 @@ const app = express();
 
 // SET UP MONGOOSE
 const mongoose = require('mongoose');
-const connectionString = 'mongodb://localhost:27017/bookapp';
+const connectionString = process.env.DB || 'mongodb://localhost:27017/contact';
 
 app.use(express.json());
 
