@@ -7,8 +7,8 @@ https://the-express-crud-app.herokuapp.com/
 # Github repo link
 https://github.com/alaomichael/express_crud_app
 
-// POST request to /books to create a new book
-// GET request to /books to fetch all books
-// GET request to /books/:id to fetch single book
-// PUT request to /books/:id to update a single book
-// DELETE request to /books/:id to delete a book
+// POST request to /contacts to create a new contact
+// GET request to /contacts  to fetch all contacts
+// GET request to /contacts/:id to fetch single contact
+// PUT request to /contacts/:id to update a single contact
+// DELETE request to /contacts/:id to delete a contact
