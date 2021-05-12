@@ -20,125 +20,116 @@ if(err) {
 })
 
 // CREATE SCHEMA
-const bookSchema = new mongoose.Schema({
-    title: {
+const contactSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true, 
+        minLength: 3
+    },
+    email:{
         type: String,
         required: true, 
         minLength: 2
     },
-    author:{
-        type: String,
-        required: true, 
-        minLength: 2
-    },
-    description: String,
-    category: {
+    country: {
         type:String,
-        enum: ["fiction","non-fiction","comics","others"],
-        default: "fiction"
-    },
-    purchaseCount: Number,
-    imageUrl: String,
-    tags: Array,
-    color: String
+        required: true, 
+        default: "Nigeria"
+    }
 })
 
-const Book = mongoose.model('Book', bookSchema)
+const contact = mongoose.model('contact', contactSchema)
 
-// POST request to /books to create a new book
-app.post('/books', (req,res) => {
-    // retrieve new book details from req.body
-    // create a new book and save to db
-        Book.create({
-        author: req.body.author,
-        description: req.body.description,
-        title: req.body.title,
-        category: req.body.category,
-        purchaseCount: req.body.purchaseCount,
-        imageUrl: req.body.imageUrl,
-        tags: req.body.tags,
-        color: req.body.color
-    }, (err, newBook) => {
+// POST request to /contacts to create a new contact
+app.post('/contacts', (req,res) => {
+    // retrieve new contact details from req.body
+    // create a new contact and save to db
+        contact.create({
+        name: req.body.name,
+        email: req.body.email,
+        country: req.body.country
+    }, (err, newcontact) => {
         if(err) {
             return res.status(500).json({message: err})
         } else {
             // send response to client
-            return res.status(200).json({message: "new book created", newBook})
+            return res.status(200).json({message: "new contact created", newcontact})
         }
     })
 })
-// GET request to /books to fetch all books
-app.get('/books', (req,res)=> {
-    // fetch all books
-    Book.find({}, (err,books)=>{
+
+// GET request to /contacts to fetch all contacts
+app.get('/contacts', (req,res)=> {
+    // fetch all contacts
+    contact.find({}, (err,contacts)=>{
         if(err){
             return res.status(500).json({message: err })
         } else {
             // send response to client 
-            return res.status(200).json({books})
+            return res.status(200).json({contacts})
         }
     })
     
 })
 
-// GET request to /books/:id to fetch single book
-app.get('/books/:id', (req,res) => {
+// GET request to /contacts/:id to fetch single contact
+app.get('/contacts/:id', (req,res) => {
     // Find by object value
-    // Book.findOne({ _id: req.params.id}, (err,book) => {
-    //     if (!book) {
+    // contact.findOne({ _id: req.params.id}, (err,contact) => {
+    //     if (!contact) {
     //         // send unsuccessful search message to client 
-    //         return res.status(404).json({message: "Book not found."})
+    //         return res.status(404).json({message: "contact not found."})
             
     //     } else if (err) {
     //         return res.status(500).json({message: err})
     //     } else {
-    //         return res.status(200).json({book})
+    //         return res.status(200).json({contact})
     //     }
     // })
 
     // Find by Id 
-    Book.findById(req.params.id, (err,book) => {
-        if (!book) {
+    contact.findById(req.params.id, (err,contact) => {
+        if (!contact) {
             // send unsuccessful search message to client 
-            return res.status(404).json({message: "Book not found."})
+            return res.status(404).json({message: "contact not found."})
         } else if (err) {
             return res.status(500).json({message: err})
         } else {
-            return res.status(200).json({book})
+            return res.status(200).json({contact})
         }
     })
 })
-// PUT request to /books/:id to update a single book
-app.put('/books/:id', (req,res) => {
-    Book.findByIdAndUpdate(req.params.id, {
-        title: req.body.title,
-        category: req.body.category
-    }, (err,book) => {
+// PUT request to /contacts/:id to update a single contact
+app.put('/contacts/:id', (req,res) => {
+    contact.findByIdAndUpdate(req.params.id, {
+        name: req.body.name,
+        email: req.body.email,
+        country: req.body.country
+    }, (err,contact) => {
         if(err) {
             return res.status(500).json({message: err})
-        } else if (!book){
-            return res.status(404).json({message: "Book does not exist."})
+        } else if (!contact){
+            return res.status(404).json({message: "Contact does not exist."})
         } else {
-            book.save((err,savedBook) => {
+            contact.save((err,savedcontact) => {
                 if(err) {
                 return res.status(400).json({message: err})    
                 } else {
-                    return res.status(200).json({message: "Book updated successfully."})
-                }
-            })
+                    return res.status(200).json({message: "Contact updated successfully."})
+                }  })
         }
 
     })
 })
-// DELETE request to /books/:id to delete a book
-app.delete('/books/:id',(req,res) => {
-    Book.findByIdAndDelete(req.params.id,(err,book)=> {
+// DELETE request to /contacts/:id to delete a contact
+app.delete('/contacts/:id',(req,res) => {
+    contact.findByIdAndDelete(req.params.id,(err,contact)=> {
         if(err) {
             return res.status(500).json({message: err})
-        } else if (!book) {
-            return res.status(404).json({message: "Book was not found"})
+        } else if (!contact) {
+            return res.status(404).json({message: "Contact was not found"})
         } else {
-            return res.status(200).json({message: "Book deleted successfully."})
+            return res.status(200).json({message: "Contact deleted successfully."})
         }
     })
 })
