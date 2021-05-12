@@ -1,9 +1,10 @@
 const express = require('express');
 const app = express();
+require('dotenv').config();
 
 // SET UP MONGOOSE
 const mongoose = require('mongoose');
-const connectionString = process.env.DB || 'mongodb://localhost:27017/contact';
+const connectionString = process.env.MONGODB_URI || 'mongodb://localhost:27017/contacts';
 
 app.use(express.json());
 
@@ -66,7 +67,7 @@ app.get('/contacts', (req,res)=> {
             return res.status(500).json({message: err })
         } else {
             // send response to client 
-            return res.status(200).json({contacts})
+            return res.status(200).json({message: "All contacts fetched successfully",contacts})
         }
     })
     
@@ -95,7 +96,7 @@ app.get('/contacts/:id', (req,res) => {
         } else if (err) {
             return res.status(500).json({message: err})
         } else {
-            return res.status(200).json({contact})
+            return res.status(200).json({message: "contact found in the database.",contact})
         }
     })
 })
@@ -150,7 +151,18 @@ app.delete('/contacts/:id',(req,res) => {
  * Model.findByIdAndRemove
 */
 
+// Serve static assets if in production
+if (process.env.NODE_ENV === 'production') {
+    // Set static folder
+    app.use(express.static('client/build'));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
+}
+
 
 const port = process.env.PORT || 5000;
 
 app.listen(port, ()=> console.log(`App listening on port ${port}`));
+        
